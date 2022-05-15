@@ -8,7 +8,6 @@ import {
   VStack,
   HStack,
   Image,
-  Avatar,
   Text,
   useDisclosure,
   Popover,
@@ -20,57 +19,23 @@ import {
   FormLabel,
   Input,
   Button,
-  ButtonGroup,
 } from "@chakra-ui/react";
-
 import {
   FaTemperatureHigh,
   FaExclamationTriangle,
   FaTrash,
 } from "react-icons/fa";
 import { EditIcon } from "@chakra-ui/icons";
-
 import { FocusLock } from "@chakra-ui/focus-lock";
-import { getDatabase, ref, set, push, child, update } from "firebase/database";
-import { getAuth } from "firebase/auth";
+
 function WeatherBox(props) {
-  const [teamFirstName, setTeamFirstName] = useState("");
-  const [teamLastName, setTeamLastName] = useState("");
-  const [role, setRole] = useState("");
-  const [location, setLocation] = useState("");
+  const [teamFirstName, setTeamFirstName] = useState(props.firstName);
+  const [teamLastName, setTeamLastName] = useState(props.lastName);
+  const [role, setRole] = useState(props.role);
+  const [location, setLocation] = useState(props.location);
 
   const { onOpen, onClose, isOpen } = useDisclosure();
   const firstFieldRef = React.useRef(null);
-
-  function updateUserData(teamFirstName, teamLastName, role, location) {
-    const db = getDatabase();
-
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const uid = user.uid;
-    const key = props.employeeId;
-
-    console.log(user);
-    const personData = {
-      firstName: teamFirstName,
-      lastName: teamLastName,
-      role: role,
-      location: location,
-    };
-    const newPostKey = push(child(ref(db), "users/{userKey}")).key;
-
-    const updates = {};
-
-    updates["/users/" + uid + "/" + key] = personData;
-
-    return update(ref(db), updates)
-      .then(() => {
-        console.log("data updated!");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
 
   return (
     <Box
@@ -85,11 +50,12 @@ function WeatherBox(props) {
         <VStack>
           <Popover
             isOpen={isOpen}
-            initialFocusRef={firstFieldRef}
+            // initialFocusRef={firstFieldRef}
             onOpen={onOpen}
             onClose={onClose}
             placement="right"
-            closeOnBlur={false}>
+            closeonChange={false}
+            m={0}>
             <PopoverTrigger>
               <EditIcon cursor="pointer" w={8} h={5} />
             </PopoverTrigger>
@@ -98,7 +64,7 @@ function WeatherBox(props) {
                 <PopoverArrow />
                 <PopoverCloseButton />
 
-                <form firstFieldRef={firstFieldRef} onCancel={onClose}>
+                <form onCancel={onClose}>
                   <VStack>
                     <HStack>
                       <FormControl>
@@ -107,7 +73,7 @@ function WeatherBox(props) {
                           id="first-name"
                           type="name"
                           defaultValue={props.firstName}
-                          onBlur={(e) => setTeamFirstName(e.target.value)}
+                          onChange={(e) => setTeamFirstName(e.target.value)}
                           required></Input>
                       </FormControl>
                       <FormControl>
@@ -116,7 +82,7 @@ function WeatherBox(props) {
                           id="last-name"
                           type="name"
                           defaultValue={props.lastName}
-                          onBlur={(e) =>
+                          onChange={(e) =>
                             setTeamLastName(e.target.value)
                           }></Input>
                       </FormControl>
@@ -127,7 +93,7 @@ function WeatherBox(props) {
                         id="role"
                         type="role"
                         defaultValue={props.role}
-                        onBlur={(e) => {
+                        onChange={(e) => {
                           setRole(e.target.value);
                         }}></Input>
                     </FormControl>
@@ -139,7 +105,7 @@ function WeatherBox(props) {
                         id="location"
                         type="location"
                         defaultValue={props.location}
-                        onBlur={(e) => {
+                        onChange={(e) => {
                           setLocation(e.target.value);
                         }}></Input>
                     </FormControl>
@@ -154,12 +120,6 @@ function WeatherBox(props) {
                           role,
                           location
                         );
-                        // updateUserData(
-                        //   teamFirstName,
-                        //   teamLastName,
-                        //   role,
-                        //   location
-                        // );
                       }}>
                       Save
                     </Button>
@@ -168,7 +128,11 @@ function WeatherBox(props) {
               </FocusLock>
             </PopoverContent>
           </Popover>
-          <Icon as={FaTrash} cursor="pointer" />
+          <Icon
+            as={FaTrash}
+            cursor="pointer"
+            onClick={() => props.onDelete(props.employeeId)}
+          />
         </VStack>
         <Box ml="3">
           <Text fontWeight="bold">{props.name}</Text>

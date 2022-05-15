@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Box, VStack } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import TeamModal from "../TeamModal";
 import Card from "../Card";
-import { getAuth } from "firebase/auth";
-import { getDatabase, ref, child, get, update } from "firebase/database";
+import { getDatabase, ref, child, get, update, set } from "firebase/database";
+import firebase from "firebase/compat/app";
 
 function Dashboard({ logout, user }) {
   const [employees, setEmployees] = useState(null);
@@ -11,39 +11,13 @@ function Dashboard({ logout, user }) {
   const dbRef = ref(getDatabase());
 
   const uid = user?.uid;
-  const tempArray = [];
 
-  useEffect(() => {
-    // if (!uid) return;
-    // console.log(employees && Object.keys(employees));
-    // const auth = getAuth();
-    // const user = auth.currentUser;
-    // const uid = user?.uid;
-
-    // const tempArray = [];
-    console.log(employees);
-  }, [employees]);
+  useEffect(() => {}, [employees]);
 
   get(child(dbRef, `users/${uid}`))
     .then((snapshot) => {
       if (snapshot.exists()) {
         if (!employees) setEmployees(snapshot.val());
-        // Object.keys(snapshot.val()).forEach((key, index) => {
-        //   const request = snapshot.val()[key];
-
-        //   let personData = {
-        //     firstName: request.firstName,
-        //     lastName: request.lastName,
-        //     location: request.location,
-        //     role: request.role,
-        //     key: Object.keys(snapshot.val())[index],
-        //     index: index,
-        //   };
-
-        // tempArray.push(personData);
-        // });
-        // setEmployees(tempArray);
-        // console.log("employees", employees);
       } else {
         console.log("No data available");
       }
@@ -52,45 +26,18 @@ function Dashboard({ logout, user }) {
       console.error(error);
     });
 
-  const handleSubmit = async (
-    data,
-    teamFirstName,
-    teamLastName,
-    role,
-    location
-  ) => {
-    console.log(teamFirstName, teamLastName, role, location);
-    const db = getDatabase();
-    update(ref(db), {
-      [`/users/${uid}/${data}`]: {
-        firstName: teamFirstName,
-        lastName: teamLastName,
-        role,
-        location,
-      },
-    });
-  };
-
-  function updateUserData(teamFirstName, teamLastName, role, location) {
+  const handleSubmit = (data, teamFirstName, teamLastName, role, location) => {
     const db = getDatabase();
 
-    const auth = getAuth();
-    const user = auth.currentUser;
-    const uid = user.uid;
-    const key = props.employeeId;
-
-    console.log(user);
-    const personData = {
+    const employeeData = {
       firstName: teamFirstName,
       lastName: teamLastName,
-      role: role,
-      location: location,
+      role,
+      location,
     };
-    const newPostKey = push(child(ref(db), "users/{userKey}")).key;
-
     const updates = {};
 
-    updates["/users/" + uid + "/" + key] = personData;
+    updates["/users/" + uid + "/" + data] = employeeData;
 
     return update(ref(db), updates)
       .then(() => {
@@ -99,7 +46,23 @@ function Dashboard({ logout, user }) {
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
+  const deleteEmployee = (data) => {
+    const db = getDatabase();
+
+    return update(ref(db, "/users/" + uid + "/" + data), {
+      firstName: null,
+      lastName: null,
+      role: null,
+      location: null,
+    })
+      .then(() => {
+        console.log("data updated!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Flex className="content" direction={"column"} alignContent="center">
       <Flex
@@ -136,6 +99,7 @@ function Dashboard({ logout, user }) {
                 lastName={employee?.lastName}
                 employeeId={id}
                 onSubmit={handleSubmit}
+                onDelete={deleteEmployee}
               />
             );
           })}

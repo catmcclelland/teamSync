@@ -11,4 +11,3 @@ root.render(
     <App />
   </Router>
 );
-// ReactDOM.createRoot(document.getElementById("root")).render(<App />);

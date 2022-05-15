@@ -6,15 +6,11 @@ import {
   Flex,
   useColorModeValue,
   Link,
-  Avatar,
-  Badge,
-  Text,
-  VStack,
 } from "@chakra-ui/react";
 
 function NewsBox(props) {
   return (
-    <Link href={props.url} _hover="no.underline">
+    <Link href={props.url} _hover={{}}>
       <Box
         maxW="xs"
         minW="xs"

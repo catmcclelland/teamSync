@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
 import Footer from "./components/Footer";
-import Features from "./components/Features";
 import "./App.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { Routes, Route, useNavigate } from "react-router-dom";

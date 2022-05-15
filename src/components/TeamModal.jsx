@@ -32,10 +32,9 @@ function TeamModal({ employees, setEmployees }) {
     const auth = getAuth();
     const user = auth.currentUser;
     const uid = user.uid;
-    let tempArray = employees;
+
     const db = getDatabase();
-    // const teamListRef = ref(db, "team");
-    const fullName = `${teamFirstName} ${teamLastName}`;
+
     set(push(ref(db, "users/" + uid)), {
       firstName: teamFirstName,
       lastName: teamLastName,
@@ -50,7 +49,8 @@ function TeamModal({ employees, setEmployees }) {
       role: role,
       location: location,
     };
-    let oldArray = employees;
+    let oldArray = [employees];
+    console.log(employees);
     let tempArray = [];
     tempArray.push(personData);
     setEmployees(oldArray.concat(tempArray));

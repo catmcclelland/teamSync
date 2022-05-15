@@ -14,7 +14,6 @@ import {
 } from "@chakra-ui/react";
 
 export function SignInModal({
-  setLoggedIn,
   setLoginPassword,
   setLoginEmail,
   login,

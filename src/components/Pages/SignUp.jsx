@@ -3,18 +3,10 @@ import React, { useEffect } from "react";
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   VStack,
-  Flex,
-  Box,
-  Stack,
-  SimpleGrid,
   Heading,
-  GridItem,
   Button,
-  chakra,
   Center,
 } from "@chakra-ui/react";
 
@@ -49,11 +41,7 @@ function SignUp({
                 }}
               />
             </FormControl>
-            {/* 
-          <FormControl mt={3} w={{ sm: "100%", md: "140%", lg: "140%" }}>
-            <FormLabel htmlFor="name">Name</FormLabel>
-            <Input id="name" type="text" />
-          </FormControl> */}
+
             <FormControl
               mt={3}
               mb={15}

@@ -1,20 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  chakra,
-  Box,
-  Image,
-  Flex,
-  useColorModeValue,
-  Link,
-  Avatar,
-  Badge,
-  Text,
-  VStack,
-  HStack,
-  Editable,
-  IconButton,
-  Icon,
-} from "@chakra-ui/react";
+import { Flex, useColorModeValue, VStack, HStack } from "@chakra-ui/react";
 
 import NewsBox from "./NewsBox";
 import WeatherBox from "./WeatherBox";
@@ -31,7 +16,7 @@ function Card(props) {
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
     const date = yesterday.toISOString().split("T")[0];
-    console.log(props);
+
     // return setNewsArray(JSON.parse(localStorage.getItem("newsArray"))) ||
     // fetch(
     //   `https://newsapi.org/v2/everything?q=${props.location}&searchIn=title&from=${date}&language=en&sortBy=popularity&apiKey=${API_KEY}`
@@ -44,7 +29,6 @@ function Card(props) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const boxes = [];
         data.articles.map((item) => {
           if (item.urlToImage && boxes.length < 3) {
@@ -64,7 +48,6 @@ function Card(props) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const boxes = [];
         boxes.push(data);
         setWeatherArray([...boxes]);
@@ -76,9 +59,8 @@ function Card(props) {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         const boxes = [];
-        data.alerts.alert.map((alert) => {
+        data.alerts?.alert.map((alert) => {
           if (alert.category) {
             boxes.push(alert);
           }
@@ -117,6 +99,7 @@ function Card(props) {
               location={props.location}
               employeeId={props.employeeId}
               onSubmit={props.onSubmit}
+              onDelete={props.onDelete}
             />
           </VStack>
 

@@ -56,7 +56,6 @@ const Hero = () => {
         <HStack>
           <Link to="/sign-up">
             <Button
-              as="a"
               w={{ base: "full", sm: "auto" }}
               variant="solid"
               bg="teal"
