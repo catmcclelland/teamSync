@@ -15,13 +15,19 @@ function Card(props) {
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
     const date = yesterday.toISOString().split("T")[0];
-
+    const options = {
+      method: "GET",
+      headers: {
+        "x-api-key": API_KEY,
+      },
+    };
     // setNewsArray(JSON.parse(localStorage.getItem("newsArray"))) ||
     fetch(
-      `https://newsapi.org/v2/everything?q=${props.location?.replace(
+      `https://api.newscatcherapi.com/v2/search?q=${props.location?.replace(
         /\s/g,
         ""
-      )}&searchIn=title&from=${date}&language=en&sortBy=popularity&apiKey=${API_KEY}`
+      )}&lang=en&ranked_only=true&sort_by=rank&search_in=title`,
+      options
     )
       // fetch(
       //   `https://untitled-2a2be96kz7xk.runkit.sh/${props.location?.replace(
@@ -31,9 +37,10 @@ function Card(props) {
       // )
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         const boxes = [];
         data.articles.map((item) => {
-          if (item.urlToImage && boxes.length < 3) {
+          if (item.media && boxes.length < 3) {
             boxes.push(item);
           }
         });
@@ -114,9 +121,12 @@ function Card(props) {
                 <NewsBox
                   key={index}
                   title={news.title}
-                  image={news.urlToImage}
-                  description={news.description.replace(/<\/?[^>]+(>|$)/g, "")}
-                  url={news.url}
+                  image={news.media}
+                  description={
+                    news.excerpt
+                    // .replace(/<\/?[^>]+(>|$)/g, "")
+                  }
+                  url={news.link}
                   height="100%"
                 />
               );

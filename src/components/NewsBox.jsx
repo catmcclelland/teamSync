@@ -24,7 +24,7 @@ function NewsBox(props) {
             color={useColorModeValue("gray.800", "white")}
             fontWeight="bold"
             fontSize="xl">
-            {props.title.split("-")[0]}
+            {props.title}
           </chakra.h2>
           <chakra.p
             mt={1}
