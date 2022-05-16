@@ -16,7 +16,6 @@ function Card(props) {
     yesterday.setDate(yesterday.getDate() - 1);
     const date = yesterday.toISOString().split("T")[0];
 
-    // return (
     // setNewsArray(JSON.parse(localStorage.getItem("newsArray"))) ||
     fetch(
       `https://newsapi.org/v2/everything?q=${props.location?.replace(
@@ -43,12 +42,11 @@ function Card(props) {
       })
 
       .catch((e) => console.log("error", e));
-    // );
   }, []);
 
   useEffect(() => {
     fetch(
-      `http://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${props.location}`
+      `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${props.location}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -59,7 +57,7 @@ function Card(props) {
   }, []);
   useEffect(() => {
     fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${props.location}&alerts=yes`
+      `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${props.location}&alerts=yes`
     )
       .then((response) => response.json())
       .then((data) => {
