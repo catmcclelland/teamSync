@@ -3,11 +3,10 @@ import { Flex, useColorModeValue, VStack, HStack } from "@chakra-ui/react";
 
 import NewsBox from "./NewsBox";
 import WeatherBox from "./WeatherBox";
-import config from "../../config";
 
 function Card(props) {
-  const API_KEY = config.API_KEY;
-  const WEATHER_API_KEY = config.WEATHER_API_KEY;
+  const API_KEY = import.meta.env.VITE_API_KEY;
+  const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
   const [newsArray, setNewsArray] = useState([]);
   const [weatherArray, setWeatherArray] = useState([]);
   const [forecast, setForecast] = useState([]);
