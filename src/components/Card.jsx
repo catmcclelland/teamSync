@@ -5,8 +5,8 @@ import NewsBox from "./NewsBox";
 import WeatherBox from "./WeatherBox";
 
 function Card(props) {
-  const API_KEY = import.meta.env.VITE_API_KEY;
-  const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
+  const API_KEY = process.env.VITE_API_KEY;
+  const WEATHER_API_KEY = process.env.VITE_WEATHER_API_KEY;
   const [newsArray, setNewsArray] = useState([]);
   const [weatherArray, setWeatherArray] = useState([]);
   const [forecast, setForecast] = useState([]);
