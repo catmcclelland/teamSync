@@ -64,47 +64,49 @@ function Dashboard({ logout, user }) {
       });
   };
   return (
-    <Flex className="content" direction={"column"} alignContent="center">
-      <Flex
-        justifyContent="center"
-        alignItems="center"
-        m={"1rem"}
-        direction="column">
+    <main>
+      <Flex className="content" direction={"column"} alignContent="center">
         <Flex
-          direction="column"
-          px={50}
-          alignItems="items-start"
-          borderRadius={"1rem"}
-          minWidth={"1400px"}>
-          Hello, {user?.email}!<br />
-          <br></br>
-          <TeamModal
-            employees={employees}
-            setEmployees={setEmployees}
-            alignSelf="flex-start"
-          />
-        </Flex>
+          justifyContent="center"
+          alignItems="center"
+          m={"1rem"}
+          direction="column">
+          <Flex
+            direction="column"
+            px={50}
+            alignItems="items-start"
+            borderRadius={"1rem"}
+            minWidth={"1400px"}>
+            Hello, {user?.email}!<br />
+            <br></br>
+            <TeamModal
+              employees={employees}
+              setEmployees={setEmployees}
+              alignSelf="flex-start"
+            />
+          </Flex>
 
-        {employees &&
-          Object.keys(employees)?.length &&
-          Object.keys(employees).map((id) => {
-            const employee = employees[id];
-            return (
-              <Card
-                name={employee?.firstName + " " + employee?.lastName}
-                role={employee?.role}
-                location={employee?.location}
-                key={id}
-                firstName={employee?.firstName}
-                lastName={employee?.lastName}
-                employeeId={id}
-                onSubmit={handleSubmit}
-                onDelete={deleteEmployee}
-              />
-            );
-          })}
+          {employees &&
+            Object.keys(employees)?.length &&
+            Object.keys(employees).map((id) => {
+              const employee = employees[id];
+              return (
+                <Card
+                  name={employee?.firstName + " " + employee?.lastName}
+                  role={employee?.role}
+                  location={employee?.location}
+                  key={id}
+                  firstName={employee?.firstName}
+                  lastName={employee?.lastName}
+                  employeeId={id}
+                  onSubmit={handleSubmit}
+                  onDelete={deleteEmployee}
+                />
+              );
+            })}
+        </Flex>
       </Flex>
-    </Flex>
+    </main>
   );
 }
 

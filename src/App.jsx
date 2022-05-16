@@ -7,6 +7,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import Home from "./components/Pages/Home";
 import SignUp from "./components/Pages/SignUp";
 import Dashboard from "./components/Pages/Dashboard";
+import NotFound from "./components/Pages/NotFound";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -100,6 +101,7 @@ function App() {
           path="dashboard"
           element={<Dashboard logout={logout} user={user} />}
         />
+        <Route element={<NotFound />} path="*" />
       </Routes>
 
       <Footer />

@@ -10,7 +10,7 @@ import {
 
 function NewsBox(props) {
   return (
-    <Link href={props.url} _hover={{}}>
+    <Link href={props.url} _hover={{}} target="_blank" rel="noopener">
       <Box
         maxW="xs"
         minW="xs"

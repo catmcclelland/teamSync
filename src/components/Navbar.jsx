@@ -39,105 +39,37 @@ export default function Navbar({
         px={{ base: 2, sm: 4 }}
         py={4}
         shadow="md">
-        <Flex alignItems="center" justifyContent="space-between" mx="auto">
-          <Flex>
-            <chakra.a
-              href="/"
-              title="Choc Home Page"
-              display="flex"
-              alignItems="center">
-              <VisuallyHidden>teamSync</VisuallyHidden>
-            </chakra.a>
-            <Link to="/">
-              <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
-                teamSync
-              </chakra.h1>
-            </Link>
-          </Flex>
-          <HStack display="flex" alignItems="center" spacing={1}>
-            <HStack
-              spacing={1}
-              mr={1}
-              color="brand.500"
-              display={{ base: "none", md: "inline-flex" }}>
-              <IconButton
-                aria-label="dark mode toggle"
-                marginRight={4}
-                icon={<SunIcon />}
-                onClick={() => toggleColorMode()}
-              />
-
-              {user ? (
-                <HStack>
-                  <Link to="/dashboard">
-                    <Button
-                      bg="teal"
-                      size="md"
-                      color="white"
-                      onClick={mobileNav.onClose}>
-                      Dashboard
-                    </Button>
-                  </Link>
-                  <Button
-                    onClick={() => {
-                      mobileNav.onClose();
-                      logout();
-                    }}>
-                    Logout
-                  </Button>
-                </HStack>
-              ) : (
-                <SignInModal
-                  isOpen={isOpen}
-                  onClose={onClose}
-                  variant="ghost"
-                  setLoginEmail={setLoginEmail}
-                  setLoginPassword={setLoginPassword}
-                  setLoggedIn={setLoggedIn}
-                  login={login}
-                  mobileNav={mobileNav}></SignInModal>
-              )}
-            </HStack>
-            {!user && (
-              <Link to="/sign-up">
-                <Button bg="teal" size="md" color="white">
-                  Get Started
-                </Button>
+        <nav>
+          <Flex alignItems="center" justifyContent="space-between" mx="auto">
+            <Flex>
+              <chakra.a
+                href="/"
+                title="Choc Home Page"
+                display="flex"
+                alignItems="center">
+                <VisuallyHidden>teamSync</VisuallyHidden>
+              </chakra.a>
+              <Link to="/">
+                <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
+                  teamSync
+                </chakra.h1>
               </Link>
-            )}
-            <Box display={{ base: "inline-flex", md: "none" }}>
-              <IconButton
-                display={{ base: "flex", md: "none" }}
-                aria-label="Open menu"
-                fontSize="20px"
-                color={useColorModeValue("gray.800", "inherit")}
-                variant="ghost"
-                icon={<AiOutlineMenu />}
-                onClick={mobileNav.onOpen}
-              />
-
-              <VStack
-                pos="absolute"
-                top={0}
-                left={0}
-                right={0}
-                display={mobileNav.isOpen ? "flex" : "none"}
-                flexDirection="column"
-                p={2}
-                pb={4}
-                m={0}
-                bg={bg}
-                spacing={3}
-                rounded="sm"
-                shadow="sm"
-                zIndex={3}>
-                <CloseButton
-                  aria-label="Close menu"
-                  onClick={mobileNav.onClose}
+            </Flex>
+            <HStack display="flex" alignItems="center" spacing={1}>
+              <HStack
+                spacing={1}
+                mr={1}
+                color="brand.500"
+                display={{ base: "none", md: "inline-flex" }}>
+                <IconButton
+                  aria-label="dark mode toggle"
+                  marginRight={4}
+                  icon={<SunIcon />}
+                  onClick={() => toggleColorMode()}
                 />
 
                 {user ? (
-                  <VStack>
+                  <HStack>
                     <Link to="/dashboard">
                       <Button
                         bg="teal"
@@ -147,9 +79,14 @@ export default function Navbar({
                         Dashboard
                       </Button>
                     </Link>
-
-                    <Button onClick={logout}>Logout</Button>
-                  </VStack>
+                    <Button
+                      onClick={() => {
+                        mobileNav.onClose();
+                        logout();
+                      }}>
+                      Logout
+                    </Button>
+                  </HStack>
                 ) : (
                   <SignInModal
                     isOpen={isOpen}
@@ -161,10 +98,75 @@ export default function Navbar({
                     login={login}
                     mobileNav={mobileNav}></SignInModal>
                 )}
-              </VStack>
-            </Box>
-          </HStack>
-        </Flex>
+              </HStack>
+              {!user && (
+                <Link to="/sign-up">
+                  <Button bg="teal" size="md" color="white">
+                    Get Started
+                  </Button>
+                </Link>
+              )}
+              <Box display={{ base: "inline-flex", md: "none" }}>
+                <IconButton
+                  display={{ base: "flex", md: "none" }}
+                  aria-label="Open menu"
+                  fontSize="20px"
+                  color={useColorModeValue("gray.800", "inherit")}
+                  variant="ghost"
+                  icon={<AiOutlineMenu />}
+                  onClick={mobileNav.onOpen}
+                />
+
+                <VStack
+                  pos="absolute"
+                  top={0}
+                  left={0}
+                  right={0}
+                  display={mobileNav.isOpen ? "flex" : "none"}
+                  flexDirection="column"
+                  p={2}
+                  pb={4}
+                  m={0}
+                  bg={bg}
+                  spacing={3}
+                  rounded="sm"
+                  shadow="sm"
+                  zIndex={3}>
+                  <CloseButton
+                    aria-label="Close menu"
+                    onClick={mobileNav.onClose}
+                  />
+
+                  {user ? (
+                    <VStack>
+                      <Link to="/dashboard">
+                        <Button
+                          bg="teal"
+                          size="md"
+                          color="white"
+                          onClick={mobileNav.onClose}>
+                          Dashboard
+                        </Button>
+                      </Link>
+
+                      <Button onClick={logout}>Logout</Button>
+                    </VStack>
+                  ) : (
+                    <SignInModal
+                      isOpen={isOpen}
+                      onClose={onClose}
+                      variant="ghost"
+                      setLoginEmail={setLoginEmail}
+                      setLoginPassword={setLoginPassword}
+                      setLoggedIn={setLoggedIn}
+                      login={login}
+                      mobileNav={mobileNav}></SignInModal>
+                  )}
+                </VStack>
+              </Box>
+            </HStack>
+          </Flex>
+        </nav>
       </chakra.header>
     </React.Fragment>
   );
