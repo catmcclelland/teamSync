@@ -16,16 +16,20 @@ function Card(props) {
     yesterday.setDate(yesterday.getDate() - 1);
     const date = yesterday.toISOString().split("T")[0];
 
-    // return setNewsArray(JSON.parse(localStorage.getItem("newsArray"))) ||
-    // fetch(
-    //   `https://newsapi.org/v2/everything?q=${props.location}&searchIn=title&from=${date}&language=en&sortBy=popularity&apiKey=${API_KEY}`
-    // )
+    // return (
+    // setNewsArray(JSON.parse(localStorage.getItem("newsArray"))) ||
     fetch(
-      `https://untitled-2a2be96kz7xk.runkit.sh/${props.location?.replace(
+      `https://newsapi.org/v2/everything?q=${props.location?.replace(
         /\s/g,
         ""
-      )}`
+      )}&searchIn=title&from=${date}&language=en&sortBy=popularity&apiKey=${API_KEY}`
     )
+      // fetch(
+      //   `https://untitled-2a2be96kz7xk.runkit.sh/${props.location?.replace(
+      //     /\s/g,
+      //     ""
+      //   )}`
+      // )
       .then((response) => response.json())
       .then((data) => {
         const boxes = [];
@@ -39,6 +43,7 @@ function Card(props) {
       })
 
       .catch((e) => console.log("error", e));
+    // );
   }, []);
 
   useEffect(() => {
