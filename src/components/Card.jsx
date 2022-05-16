@@ -46,7 +46,7 @@ function Card(props) {
 
   useEffect(() => {
     fetch(
-      `https://api.weatherapi.com/v1/current.json?key=${VITE_WEATHER_API_KEY}&q=${props.location}`
+      `https://api.weatherapi.com/v1/current.json?key=${WEATHER_API_KEY}&q=${props.location}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -57,7 +57,7 @@ function Card(props) {
   }, []);
   useEffect(() => {
     fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=${VITE_WEATHER_API_KEY}&q=${props.location}&alerts=yes`
+      `https://api.weatherapi.com/v1/forecast.json?key=${WEATHER_API_KEY}&q=${props.location}&alerts=yes`
     )
       .then((response) => response.json())
       .then((data) => {
