@@ -101,6 +101,7 @@ function Dashboard({ logout, user }) {
                   employeeId={id}
                   onSubmit={handleSubmit}
                   onDelete={deleteEmployee}
+                  index={Object.keys(employees).indexOf(id)}
                 />
               );
             })}

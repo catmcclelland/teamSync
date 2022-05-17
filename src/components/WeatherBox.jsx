@@ -120,6 +120,7 @@ function WeatherBox(props) {
                           role,
                           location
                         );
+                        onClose();
                       }}>
                       Save
                     </Button>

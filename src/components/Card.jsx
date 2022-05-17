@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Flex, useColorModeValue, VStack, HStack } from "@chakra-ui/react";
-
+import "simple-rate-limiter";
 import NewsBox from "./NewsBox";
 import WeatherBox from "./WeatherBox";
 
@@ -22,33 +22,35 @@ function Card(props) {
       },
     };
     // setNewsArray(JSON.parse(localStorage.getItem("newsArray"))) ||
-    fetch(
-      `https://api.newscatcherapi.com/v2/search?q=${props.location?.replace(
-        /\s/g,
-        ""
-      )}&lang=en&ranked_only=true&sort_by=rank&search_in=title`,
-      options
-    )
-      // fetch(
-      //   `https://untitled-2a2be96kz7xk.runkit.sh/${props.location?.replace(
-      //     /\s/g,
-      //     ""
-      //   )}`
-      // )
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        const boxes = [];
-        data.articles.map((item) => {
-          if (item.media && boxes.length < 3) {
-            boxes.push(item);
-          }
-        });
-        setNewsArray([...boxes]);
-        window.localStorage.setItem("newsArray", JSON.stringify([...boxes]));
-      })
+    setTimeout(() => {
+      fetch(
+        `https://api.newscatcherapi.com/v2/search?q=${props.location?.replace(
+          /\s/g,
+          ""
+        )}&lang=en&ranked_only=true&sort_by=rank&search_in=title`,
+        options
+      )
+        // fetch(
+        //   `https://untitled-2a2be96kz7xk.runkit.sh/${props.location?.replace(
+        //     /\s/g,
+        //     ""
+        //   )}`
+        // )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          const boxes = [];
+          data.articles.map((item) => {
+            if (item.media && boxes.length < 3) {
+              boxes.push(item);
+            }
+          });
+          setNewsArray([...boxes]);
+          window.localStorage.setItem("newsArray", JSON.stringify([...boxes]));
+        })
 
-      .catch((e) => console.log("error", e));
+        .catch((e) => console.log("error", e));
+    }, 1000 * props.index);
   }, []);
 
   useEffect(() => {
