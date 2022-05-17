@@ -30,6 +30,8 @@ function App() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [isEmailError, setIsEmailError] = useState([false, ""]);
+  const [isPasswordError, setIsPasswordError] = useState([false, ""]);
   const navigate = useNavigate();
 
   const login = async () => {
@@ -45,12 +47,23 @@ function App() {
       }
     } catch (error) {
       console.log(error.message);
+      if (error.message === "Firebase: Error (auth/invalid-email).") {
+        setIsEmailError([true, "Valid email is required."]);
+      } else if (
+        error.message === "Firebase: Error (auth/email-already-in-use)."
+      ) {
+        setIsEmailError([true, "Email already in use."]);
+      }
+      if (error.message === "Firebase: Error (auth/wrong-password).") {
+        setIsPasswordError([true, "Incorrect password."]);
+      }
     }
   };
   const logout = async () => {
     await signOut(auth);
     navigate("/");
   };
+
   const register = async () => {
     try {
       const user = await createUserWithEmailAndPassword(
@@ -60,10 +73,29 @@ function App() {
       );
 
       if (user) {
+        setIsEmailError[0](false);
+        setIsPasswordError([false, ""]);
         navigate("/dashboard");
       }
     } catch (error) {
       console.log(error.message);
+      if (error.message === "Firebase: Error (auth/invalid-email).") {
+        setIsEmailError([true, "Valid email is required."]);
+      } else if (
+        error.message === "Firebase: Error (auth/email-already-in-use)."
+      ) {
+        setIsEmailError([true, "Email already in use."]);
+      }
+      if (
+        registerPassword.length < 6 ||
+        error.message ===
+          "Firebase: Password should be at least 6 characters (auth/weak-password)."
+      ) {
+        setIsPasswordError([true, "Password must be at least 6 characters."]);
+      }
+      if (registerPassword.length >= 6) {
+        setIsPasswordError[0](false);
+      }
     }
   };
 
@@ -82,6 +114,8 @@ function App() {
         login={login}
         user={user}
         logout={logout}
+        isEmailError={isEmailError}
+        isPasswordError={isPasswordError}
       />
       <Routes>
         <Route exact path="/" element={<Home />} />
@@ -94,6 +128,8 @@ function App() {
               setRegisterPassword={setRegisterPassword}
               register={register}
               user={user}
+              isEmailError={isEmailError}
+              isPasswordError={isPasswordError}
             />
           }
         />

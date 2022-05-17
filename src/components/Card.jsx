@@ -3,6 +3,7 @@ import { Flex, useColorModeValue, VStack, HStack } from "@chakra-ui/react";
 import "simple-rate-limiter";
 import NewsBox from "./NewsBox";
 import WeatherBox from "./WeatherBox";
+import { Carousel } from "./Carousel";
 
 function Card(props) {
   const API_KEY = import.meta.env.VITE_API_KEY;
@@ -41,7 +42,7 @@ function Card(props) {
           console.log(data);
           const boxes = [];
           data.articles.map((item) => {
-            if (item.media && boxes.length < 3) {
+            if (item.media && boxes.length < 10) {
               boxes.push(item);
             }
           });
@@ -50,7 +51,7 @@ function Card(props) {
         })
 
         .catch((e) => console.log("error", e));
-    }, 1000 * props.index);
+    }, 1002 * props.index);
   }, []);
 
   useEffect(() => {
@@ -83,57 +84,39 @@ function Card(props) {
   return (
     <section>
       <Flex
+        width={{ base: "95vw", sm: "md", md: "lg", lg: "xl" }}
         bg={useColorModeValue(
-          "rgba(249, 250, 251, 1)",
-          "rgba( 69, 84, 112, 1 )"
+          "rgba(249, 250, 251, .25)",
+          "rgba( 69, 84, 112, .25 )"
         )}
-        p={50}
-        alignItems="center"
-        justifyContent="center"
         borderRadius={"1rem"}
-        my={"1rem"}
-        minWidth={"2xl"}
         boxShadow="0 8px 32px 0 rgba( 31, 38, 135, 0.37 ) "
         backdropFilter="blur(4px)"
-        border="1px solid rgba( 255, 255, 255, 0.18 )">
-        <Flex direction="column">
-          <HStack>
-            <VStack align="start" mr={"1rem"}>
-              <WeatherBox
-                city={weatherArray[0]?.location.name}
-                state={weatherArray[0]?.location.region}
-                time={weatherArray[0]?.location.localtime.split(" ")[1]}
-                temp={weatherArray[0]?.current.temp_f}
-                condition={weatherArray[0]?.current.condition.text}
-                icon={weatherArray[0]?.current.condition.icon}
-                alert={forecast[0]?.event}
-                name={props.name}
-                role={props.role}
-                firstName={props.firstName}
-                lastName={props.lastName}
-                location={props.location}
-                employeeId={props.employeeId}
-                onSubmit={props.onSubmit}
-                onDelete={props.onDelete}
-              />
-            </VStack>
-
-            {newsArray.map((news, index) => {
-              return (
-                <NewsBox
-                  key={index}
-                  title={news.title}
-                  image={news.media}
-                  description={
-                    news.excerpt
-                    // .replace(/<\/?[^>]+(>|$)/g, "")
-                  }
-                  url={news.link}
-                  height="100%"
-                />
-              );
-            })}
-          </HStack>
+        border="1px solid rgba( 255, 255, 255, 0.18 )"
+        my=".75rem"
+        direction="column"
+        justifyContent="center"
+        alignItems="center">
+        <Flex direction="column" justifyContent="center" alignItems="center">
+          <WeatherBox
+            city={weatherArray[0]?.location?.name}
+            state={weatherArray[0]?.location?.region}
+            time={weatherArray[0]?.location?.localtime.split(" ")[1]}
+            temp={weatherArray[0]?.current?.temp_f}
+            condition={weatherArray[0]?.current?.condition.text}
+            icon={weatherArray[0]?.current?.condition.icon}
+            alert={forecast[0]?.event}
+            name={props.name}
+            role={props.role}
+            firstName={props.firstName}
+            lastName={props.lastName}
+            location={props.location}
+            employeeId={props.employeeId}
+            onSubmit={props.onSubmit}
+            onDelete={props.onDelete}
+            employees={props.employees}
+          />
+          <Carousel length={newsArray.length} newsArray={newsArray} />
         </Flex>
       </Flex>
     </section>

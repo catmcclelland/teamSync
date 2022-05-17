@@ -18,14 +18,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { SignInModal } from "./SignInModal";
 import { SunIcon } from "@chakra-ui/icons";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-export default function Navbar({
-  setLoggedIn,
-  setLoginPassword,
-  setLoginEmail,
-  login,
-  user,
-  logout,
-}) {
+export default function Navbar(props) {
   const bg = useColorModeValue("white", "gray.800");
   const mobileNav = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -68,7 +61,7 @@ export default function Navbar({
                   onClick={() => toggleColorMode()}
                 />
 
-                {user ? (
+                {props.user ? (
                   <HStack>
                     <Link to="/dashboard">
                       <Button
@@ -82,7 +75,7 @@ export default function Navbar({
                     <Button
                       onClick={() => {
                         mobileNav.onClose();
-                        logout();
+                        props.logout();
                       }}>
                       Logout
                     </Button>
@@ -92,14 +85,16 @@ export default function Navbar({
                     isOpen={isOpen}
                     onClose={onClose}
                     variant="ghost"
-                    setLoginEmail={setLoginEmail}
-                    setLoginPassword={setLoginPassword}
-                    setLoggedIn={setLoggedIn}
-                    login={login}
-                    mobileNav={mobileNav}></SignInModal>
+                    setLoginEmail={props.setLoginEmail}
+                    setLoginPassword={props.setLoginPassword}
+                    setLoggedIn={props.setLoggedIn}
+                    login={props.login}
+                    mobileNav={props.mobileNav}
+                    isEmailError={props.isEmailError}
+                    isPasswordError={props.isPasswordError}></SignInModal>
                 )}
               </HStack>
-              {!user && (
+              {!props.user && (
                 <Link to="/sign-up">
                   <Button bg="teal" size="md" color="white">
                     Get Started
@@ -137,7 +132,7 @@ export default function Navbar({
                     onClick={mobileNav.onClose}
                   />
 
-                  {user ? (
+                  {props.user ? (
                     <VStack>
                       <Link to="/dashboard">
                         <Button
@@ -149,18 +144,20 @@ export default function Navbar({
                         </Button>
                       </Link>
 
-                      <Button onClick={logout}>Logout</Button>
+                      <Button onClick={props.logout}>Logout</Button>
                     </VStack>
                   ) : (
                     <SignInModal
                       isOpen={isOpen}
                       onClose={onClose}
                       variant="ghost"
-                      setLoginEmail={setLoginEmail}
-                      setLoginPassword={setLoginPassword}
-                      setLoggedIn={setLoggedIn}
-                      login={login}
-                      mobileNav={mobileNav}></SignInModal>
+                      setLoginEmail={props.setLoginEmail}
+                      setLoginPassword={props.setLoginPassword}
+                      setLoggedIn={props.setLoggedIn}
+                      login={props.login}
+                      mobileNav={mobileNav}
+                      isEmailError={props.isEmailError}
+                      isPasswordError={props.isPasswordError}></SignInModal>
                   )}
                 </VStack>
               </Box>

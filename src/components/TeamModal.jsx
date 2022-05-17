@@ -20,7 +20,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, set, push } from "firebase/database";
 
-function TeamModal({ employees, setEmployees }) {
+function TeamModal({ employees, setEmployees, getEmployees }) {
   const [teamFirstName, setTeamFirstName] = useState("");
   const [teamLastName, setTeamLastName] = useState("");
   const [role, setRole] = useState("");
@@ -41,20 +41,23 @@ function TeamModal({ employees, setEmployees }) {
       role: role,
       location: location,
     });
+    getEmployees();
   }
-  const addNewPerson = (teamFirstName, teamLastName, role, location) => {
-    let personData = {
-      firstName: teamFirstName,
-      lastName: teamLastName,
-      role: role,
-      location: location,
-    };
-    let oldArray = [employees];
-    console.log(employees);
-    let tempArray = [];
-    tempArray.push(personData);
-    setEmployees(oldArray.concat(tempArray));
-  };
+  // const addNewPerson = (teamFirstName, teamLastName, role, location) => {
+  //   console.log(employees);
+  //   let personData = {
+  //     firstName: teamFirstName,
+  //     lastName: teamLastName,
+  //     role: role,
+  //     location: location,
+  //   };
+  //   let oldArray = [employees];
+
+  //   let tempArray = [];
+  //   tempArray.push(personData);
+  //   setEmployees(oldArray.concat(personData).join());
+  //   console.log(oldArray.concat(personData));
+  // };
   return (
     <Box>
       <Button
@@ -127,7 +130,7 @@ function TeamModal({ employees, setEmployees }) {
               onClick={() => {
                 writeUserData(teamFirstName, teamLastName, role, location);
                 onClose();
-                addNewPerson(teamFirstName, teamLastName, role, location);
+                // addNewPerson(teamFirstName, teamLastName, role, location);
               }}>
               Submit
             </Button>

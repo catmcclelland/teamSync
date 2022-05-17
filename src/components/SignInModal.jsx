@@ -11,14 +11,11 @@ import {
   FormControl,
   FormLabel,
   Input,
+  propNames,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 
-export function SignInModal({
-  setLoginPassword,
-  setLoginEmail,
-  login,
-  mobileNav,
-}) {
+export function SignInModal(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -26,6 +23,7 @@ export function SignInModal({
       <Button
         onClick={() => {
           onOpen();
+          console.log(props);
         }}
         size="md">
         Sign in
@@ -37,36 +35,44 @@ export function SignInModal({
           <ModalHeader>Sign In</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <form onSubmit={login}>
-              <FormControl mt={3}>
+            <form onSubmit={props.login}>
+              <FormControl mt={3} isInvalid={props.isEmailError[0]}>
                 <FormLabel htmlFor="email">Email address</FormLabel>
                 <Input
                   id="email"
                   type="email"
                   autoComplete="username"
                   onChange={(event) => {
-                    setLoginEmail(event.target.value);
+                    props.setLoginEmail(event.target.value);
                   }}
                 />
+                {props.isEmailError[0] && (
+                  <FormErrorMessage>{props.isEmailError[1]}</FormErrorMessage>
+                )}
               </FormControl>
 
-              <FormControl mt={3} mb={15}>
+              <FormControl mt={3} mb={15} isInvalid={props.isPasswordError}>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                   id="password"
                   type="password"
                   autoComplete="current-password"
                   onChange={(event) => {
-                    setLoginPassword(event.target.value);
+                    props.setLoginPassword(event.target.value);
                   }}
                 />
+                {props.isPasswordError[0] && (
+                  <FormErrorMessage>
+                    {props.isPasswordError[1]}
+                  </FormErrorMessage>
+                )}
               </FormControl>
               <Button
                 width="full"
                 top={"1rem"}
                 onClick={(e) => {
-                  login(e);
-                  mobileNav.onClose();
+                  props.login(e);
+                  props.mobileNav.onClose();
                 }}>
                 Submit
               </Button>

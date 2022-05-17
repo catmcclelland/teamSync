@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import TeamModal from "../TeamModal";
 import Card from "../Card";
 import { getDatabase, ref, child, get, update, set } from "firebase/database";
@@ -14,18 +14,20 @@ function Dashboard({ logout, user }) {
 
   useEffect(() => {}, [employees]);
 
-  get(child(dbRef, `users/${uid}`))
-    .then((snapshot) => {
-      if (snapshot.exists()) {
-        if (!employees) setEmployees(snapshot.val());
-      } else {
-        console.log("No data available");
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-
+  const getEmployees = () => {
+    get(child(dbRef, `users/${uid}`))
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          setEmployees(snapshot.val());
+        } else {
+          console.log("No data available");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+  getEmployees();
   const handleSubmit = (data, teamFirstName, teamLastName, role, location) => {
     const db = getDatabase();
 
@@ -57,6 +59,7 @@ function Dashboard({ logout, user }) {
       location: null,
     })
       .then(() => {
+        getEmployees();
         console.log("data updated!");
       })
       .catch((error) => {
@@ -65,47 +68,40 @@ function Dashboard({ logout, user }) {
   };
   return (
     <main>
-      <Flex className="content" direction={"column"} alignContent="center">
-        <Flex
-          justifyContent="center"
-          alignItems="center"
-          m={"1rem"}
-          direction="column">
-          <Flex
-            direction="column"
-            px={50}
-            alignItems="items-start"
-            borderRadius={"1rem"}
-            minWidth={"1400px"}>
-            Hello, {user?.email}!<br />
-            <br></br>
-            <TeamModal
-              employees={employees}
-              setEmployees={setEmployees}
-              alignSelf="flex-start"
-            />
-          </Flex>
+      <Flex
+        className="content"
+        direction={"column"}
+        justifyContent="center"
+        alignItems="center">
+        <Text>
+          Hello, {user?.email}!<br />
+        </Text>
 
-          {employees &&
-            Object.keys(employees)?.length &&
-            Object.keys(employees).map((id) => {
-              const employee = employees[id];
-              return (
-                <Card
-                  name={employee?.firstName + " " + employee?.lastName}
-                  role={employee?.role}
-                  location={employee?.location}
-                  key={id}
-                  firstName={employee?.firstName}
-                  lastName={employee?.lastName}
-                  employeeId={id}
-                  onSubmit={handleSubmit}
-                  onDelete={deleteEmployee}
-                  index={Object.keys(employees).indexOf(id)}
-                />
-              );
-            })}
-        </Flex>
+        <TeamModal
+          employees={employees}
+          setEmployees={setEmployees}
+          getEmployees={getEmployees}
+        />
+        {employees &&
+          Object.keys(employees)?.length &&
+          Object.keys(employees).map((id) => {
+            const employee = employees[id];
+            return (
+              <Card
+                name={employee?.firstName + " " + employee?.lastName}
+                role={employee?.role}
+                location={employee?.location}
+                key={id}
+                firstName={employee?.firstName}
+                lastName={employee?.lastName}
+                employeeId={id}
+                onSubmit={handleSubmit}
+                onDelete={deleteEmployee}
+                index={Object.keys(employees).indexOf(id)}
+                employees={employees}
+              />
+            );
+          })}
       </Flex>
     </main>
   );

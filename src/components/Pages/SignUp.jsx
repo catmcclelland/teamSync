@@ -8,15 +8,11 @@ import {
   Heading,
   Button,
   Center,
+  FormErrorMessage,
+  FormHelperText,
 } from "@chakra-ui/react";
 
-function SignUp({
-  setRegisterEmail,
-  setRegisterPassword,
-  register,
-  setUser,
-  user,
-}) {
+function SignUp(props) {
   return (
     <div className="content">
       <Center width="100vw">
@@ -30,19 +26,26 @@ function SignUp({
               mb={"2rem"}>
               Sign Up
             </Heading>
-            <FormControl mt={3} w={{ sm: "100%", md: "140%", lg: "140%" }}>
+            <FormControl
+              mt={3}
+              w={{ sm: "100%", md: "140%", lg: "140%" }}
+              isInvalid={props.isEmailError[0]}>
               <FormLabel htmlFor="email">Email address</FormLabel>
               <Input
                 id="email"
                 type="email"
                 autoComplete="username"
                 onChange={(event) => {
-                  setRegisterEmail(event.target.value);
+                  props.setRegisterEmail(event.target.value);
                 }}
               />
+              {props.isEmailError[0] && (
+                <FormErrorMessage>{props.isEmailError[1]}</FormErrorMessage>
+              )}
             </FormControl>
 
             <FormControl
+              isInvalid={props.isPasswordError}
               mt={3}
               mb={15}
               w={{ sm: "100%", md: "140%", lg: "140%" }}>
@@ -52,12 +55,17 @@ function SignUp({
                 type="password"
                 autoComplete="new-password"
                 onChange={(event) => {
-                  setRegisterPassword(event.target.value);
+                  props.setRegisterPassword(event.target.value);
                 }}
               />
+              {props.isPasswordError && (
+                <FormErrorMessage>
+                  Password must be at least 6 characters.
+                </FormErrorMessage>
+              )}
             </FormControl>
 
-            <Button width="full" top={"1rem"} onClick={register}>
+            <Button width="full" top={"1rem"} onClick={props.register}>
               Submit
             </Button>
           </form>
