@@ -31,7 +31,13 @@ export function Carousel(props) {
       bg: "black",
     },
   };
-
+  const slides = props.newsArray.map((slide, index) => {
+    return {
+      ...slide,
+      index: index,
+    };
+  });
+  const slidesCount = slides.length;
   const prevSlide = () => {
     setCurrentSlide((s) => (s === 0 ? slidesCount - 1 : s - 1));
   };
@@ -45,14 +51,7 @@ export function Carousel(props) {
     transition: "all .5s",
     ml: `-${currentSlide * 100}%`,
   };
-  //TODO: map through slides and make an object?
-  const slides = props.newsArray.map((slide, index) => {
-    return {
-      ...slide,
-      index: index,
-    };
-  });
-  const slidesCount = slides.length;
+
   return (
     <Flex
       w={{ base: "xs", sm: "sm", md: "md", lg: "lg" }}
