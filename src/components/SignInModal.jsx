@@ -51,7 +51,7 @@ export function SignInModal(props) {
                 )}
               </FormControl>
 
-              <FormControl mt={3} mb={15} isInvalid={props.isPasswordError}>
+              <FormControl mt={3} mb={15} isInvalid={props.isPasswordError[0]}>
                 <FormLabel htmlFor="password">Password</FormLabel>
                 <Input
                   id="password"
