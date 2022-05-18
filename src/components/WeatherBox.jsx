@@ -165,8 +165,7 @@ function WeatherBox(props) {
           direction={"row"}
           justifyContent="space-around"
           alignItems="center"
-          mt={".25rem"}
-          wordWrap="normal">
+          mt={".25rem"}>
           <Icon as={FaTemperatureHigh} w={"1rem"} m={0} lineHeight={".5rem"} />
           <Text
             fontSize={"sm"}

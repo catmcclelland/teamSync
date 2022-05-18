@@ -43,27 +43,16 @@ function TeamModal({ employees, setEmployees, getEmployees }) {
     });
     getEmployees();
   }
-  // const addNewPerson = (teamFirstName, teamLastName, role, location) => {
-  //   console.log(employees);
-  //   let personData = {
-  //     firstName: teamFirstName,
-  //     lastName: teamLastName,
-  //     role: role,
-  //     location: location,
-  //   };
-  //   let oldArray = [employees];
-
-  //   let tempArray = [];
-  //   tempArray.push(personData);
-  //   setEmployees(oldArray.concat(personData).join());
-  //   console.log(oldArray.concat(personData));
-  // };
+  //TODO:
+  // Increase precision of location functionality.
+  // Add avatar option for each team member.
   return (
     <Box>
       <Button
         onClick={onOpen}
         leftIcon={<AddIcon />}
         backgroundColor="teal"
+        color="white"
         variant="solid">
         New team member
       </Button>
