@@ -45,7 +45,7 @@ function SignUp(props) {
             </FormControl>
 
             <FormControl
-              isInvalid={props.isPasswordError}
+              isInvalid={props.isPasswordError[0]}
               mt={3}
               mb={15}
               w={{ sm: "100%", md: "140%", lg: "140%" }}>
@@ -58,7 +58,7 @@ function SignUp(props) {
                   props.setRegisterPassword(event.target.value);
                 }}
               />
-              {props.isPasswordError && (
+              {props.isPasswordError[0] && (
                 <FormErrorMessage>
                   Password must be at least 6 characters.
                 </FormErrorMessage>
