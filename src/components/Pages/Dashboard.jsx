@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, chakra } from "@chakra-ui/react";
 import TeamModal from "../TeamModal";
 import Card from "../Card";
 import { getDatabase, ref, child, get, update, set } from "firebase/database";
@@ -73,9 +73,10 @@ function Dashboard({ logout, user }) {
         direction={"column"}
         justifyContent="center"
         alignItems="center">
-        <Text>
-          Hello, {user?.email}!<br />
-        </Text>
+        <chakra.h1>
+          {user?.email}'s Dashboard
+          <br />
+        </chakra.h1>
 
         <TeamModal
           employees={employees}

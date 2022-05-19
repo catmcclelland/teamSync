@@ -10,6 +10,8 @@ import {
   Center,
   FormErrorMessage,
   FormHelperText,
+  ChakraProvider,
+  chakra,
 } from "@chakra-ui/react";
 
 function SignUp(props) {
@@ -18,14 +20,14 @@ function SignUp(props) {
       <Center width="100vw">
         <VStack>
           <form>
-            <Heading
+            <chakra.h1
               fontSize="lg"
               fontWeight="medium"
               lineHeight="6"
               mt={"2rem"}
               mb={"2rem"}>
               Sign Up
-            </Heading>
+            </chakra.h1>
             <FormControl
               mt={3}
               w={{ sm: "100%", md: "140%", lg: "140%" }}

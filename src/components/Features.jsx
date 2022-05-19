@@ -44,7 +44,7 @@ export default function Features() {
             color={useColorModeValue("gray.900")}>
             {props.title}
           </chakra.dt>
-          <chakra.dd mt={2} color={useColorModeValue("gray.500", "gray.400")}>
+          <chakra.dd mt={2} color={useColorModeValue("gray.500", "#a7bbd7")}>
             {props.children}
           </chakra.dd>
         </Box>
@@ -69,7 +69,7 @@ export default function Features() {
               fontSize="xs"
               fontWeight="semibold"
               letterSpacing="wide"
-              color="gray.400"
+              color="#a7bbd7"
               textTransform="uppercase">
               Features
             </chakra.h2>
@@ -77,7 +77,7 @@ export default function Features() {
               mt={2}
               fontSize={{ base: "3xl", sm: "md" }}
               lineHeight="8"
-              fontWeight="extrabold"
+              fontWeight="bold"
               letterSpacing="tight"
               color={useColorModeValue("gray.900")}>
               A better way to keep up
@@ -87,7 +87,7 @@ export default function Features() {
               maxW="2xl"
               fontSize="xl"
               mx={{ lg: "auto" }}
-              color={useColorModeValue("gray.500", "gray.400")}>
+              color={useColorModeValue("gray.500", "#a7bbd7")}>
               Lorem ipsum dolor sit amet consect adipisicing elit. Possimus
               magnam voluptatum cupiditate veritatis in accusamus quisquam.
             </chakra.p>

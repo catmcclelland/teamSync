@@ -35,11 +35,11 @@ export default function NotFound() {
             color={useColorModeValue("gray.900", "gray.100")}
             mb={6}>
             <chakra.span display="block">Ready to dive in?</chakra.span>
-            <chakra.span
+            <chakra.h1
               display="block"
               color={useColorModeValue("brand.600", "gray.500")}>
               Page not found.
-            </chakra.span>
+            </chakra.h1>
           </chakra.span>
           <Stack
             justifyContent={{ base: "left", md: "center" }}

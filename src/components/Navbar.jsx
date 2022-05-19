@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   chakra,
@@ -23,7 +23,7 @@ export default function Navbar(props) {
   const mobileNav = useDisclosure();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
-
+  const [darkMode, setDarkMode] = useState(false);
   return (
     <React.Fragment>
       <chakra.header
@@ -35,15 +35,20 @@ export default function Navbar(props) {
         <nav>
           <Flex alignItems="center" justifyContent="space-between" mx="auto">
             <Flex>
-              <chakra.a
-                href="/"
-                title="Choc Home Page"
+              {/* <chakra.a
+                href="/"  
+                title="teamSync home page"
                 display="flex"
                 alignItems="center">
-                <VisuallyHidden>teamSync</VisuallyHidden>
-              </chakra.a>
+                <VisuallyHidden tabIndex={"-1"}>teamSync</VisuallyHidden>
+              </chakra.a> */}
               <Link to="/">
-                <chakra.h1 fontSize="xl" fontWeight="medium" ml="2">
+                <chakra.h1
+                  fontSize="xl"
+                  fontWeight="medium"
+                  ml="2"
+                  // tabIndex={"0"}
+                >
                   teamSync
                 </chakra.h1>
               </Link>
@@ -55,16 +60,22 @@ export default function Navbar(props) {
                 color="brand.500"
                 display={{ base: "none", md: "inline-flex" }}>
                 <IconButton
-                  aria-label="dark mode toggle"
+                  aria-label={
+                    darkMode ? "dark mode toggle, on" : "dark mode toggle, off"
+                  }
                   marginRight={4}
                   icon={<SunIcon />}
-                  onClick={() => toggleColorMode()}
+                  onClick={() => {
+                    toggleColorMode();
+                    setDarkMode(!darkMode);
+                  }}
                 />
 
                 {props.user ? (
                   <HStack>
                     <Link to="/dashboard">
                       <Button
+                        tabIndex={"-1"}
                         bg="teal"
                         size="md"
                         color="white"
@@ -96,7 +107,7 @@ export default function Navbar(props) {
               </HStack>
               {!props.user && (
                 <Link to="/sign-up">
-                  <Button bg="teal" size="md" color="white">
+                  <Button bg="teal" size="md" color="white" tabIndex={"-1"}>
                     Get Started
                   </Button>
                 </Link>

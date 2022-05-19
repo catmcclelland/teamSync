@@ -88,7 +88,11 @@ function Card(props) {
         direction="column"
         justifyContent="center"
         alignItems="center">
-        <Flex direction="column" justifyContent="center" alignItems="center">
+        <Flex
+          direction="column"
+          justifyContent="center"
+          alignItems="center"
+          width="100%">
           <WeatherBox
             city={weatherArray[0]?.location?.name}
             state={weatherArray[0]?.location?.region}

@@ -37,7 +37,7 @@ const Hero = () => {
             fontSize="xs"
             fontWeight="semibold"
             letterSpacing="wide"
-            color="gray.400"
+            color={useColorModeValue("gray.900", "#a7bbd7")}
             textTransform="uppercase">
             For Leaders
           </chakra.p>
@@ -49,7 +49,10 @@ const Hero = () => {
             color={useColorModeValue("gray.900", "white")}>
             Stay connected
           </chakra.h1>
-          <chakra.p mb={5} color="gray.500" fontSize={{ md: "lg" }}>
+          <chakra.p
+            mb={5}
+            color={useColorModeValue("gray.900", "#a7bbd7")}
+            fontSize={{ md: "lg" }}>
             It's more important than ever to help you and your team stay
             connected. That's why we provide tools to help you stay close to
             your team - no matter how far you are.
@@ -63,7 +66,8 @@ const Hero = () => {
                 color="white"
                 size="lg"
                 mb={{ base: 2, sm: 0 }}
-                cursor="pointer">
+                cursor="pointer"
+                tabIndex={"-1"}>
                 Sign up for free
               </Button>
             </Link>

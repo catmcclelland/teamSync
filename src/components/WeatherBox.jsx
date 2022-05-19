@@ -62,13 +62,16 @@ function WeatherBox(props) {
           <Popover
             isOpen={isOpen}
             // initialFocusRef={firstFieldRef}
+
             onOpen={onOpen}
             onClose={onClose}
             placement="right"
             closeonChange={false}
             m={0}>
-            <PopoverTrigger>
-              <EditIcon cursor="pointer" w={8} h={5} />
+            <PopoverTrigger aria-label="edit button">
+              <Button background="transparent" p={"0"} top="-1rem">
+                <EditIcon cursor="pointer" w={8} h={5} />
+              </Button>
             </PopoverTrigger>
             <PopoverContent p={5}>
               <FocusLock returnFocus persistentFocus={false}>
@@ -143,13 +146,15 @@ function WeatherBox(props) {
           <Popover>
             {({ isOpen, onClose }) => (
               <>
-                <PopoverTrigger>
-                  <Icon as={FaTrash} cursor="pointer" />
+                <PopoverTrigger aria-label="delete button">
+                  <Button background="transparent" p={"0"} top="-2rem">
+                    <Icon as={FaTrash} cursor="pointer" />
+                  </Button>
                 </PopoverTrigger>
                 <PopoverContent>
                   <PopoverArrow />
                   <PopoverCloseButton />
-                  <PopoverHeader>Confirmation!</PopoverHeader>
+                  {/* <PopoverHeader>Confirmation!</PopoverHeader> */}
                   <PopoverBody>
                     Are you sure you would like to delete?
                   </PopoverBody>
@@ -197,7 +202,7 @@ function WeatherBox(props) {
             </VStack>
           </Flex>
           <Flex justifyContent={"flex-end"}>
-            <VStack>
+            <VStack mr="1rem">
               <Text lineHeight={"1rem"} fontSize="sm">
                 {props.city}
               </Text>
@@ -237,7 +242,7 @@ function WeatherBox(props) {
             </Text>
           </HStack>
           {props.alert && (
-            <HStack>
+            <HStack maxWidth="50%">
               <Icon as={FaExclamationTriangle} w={"1rem"} m={0} />
               <Text fontSize={"sm"} lineHeight={"1rem"} align="center">
                 {props.alert}
