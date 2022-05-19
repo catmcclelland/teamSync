@@ -90,7 +90,7 @@ export function Carousel(props) {
                   src={slide.media}
                   alt="news carousel image"
                   m="0 auto"
-                  height="80%"
+                  height="75%"
                   backgroundSize="cover"
                   fit="cover"
                 />
@@ -101,13 +101,13 @@ export function Carousel(props) {
                   w="full"
                   mb="0"
                   color="white"
-                  height="20%"
+                  height="25%"
                   background="rgba( 0, 0, 0, 0.25 )"
-                  boxShadow="0 8px 32px 0 rgba( 255, 255, 135, 0.37 )"
-                  backdropFilter="blur(10px)"
+                  backdropFilter="blur(12px)"
                   border="1px solid rgba( 255, 255, 255, 0.01 )">
-                  <Box pb="1rem" px="1rem">
-                    <Text fontSize="lg" fontWeight="semibold">
+                  <Box p="1rem">
+                    <Text
+                      fontSize={{ base: "sm", sm: "lg", md: "lg", lg: "xl" }}>
                       {slide.title}
                     </Text>
                   </Box>

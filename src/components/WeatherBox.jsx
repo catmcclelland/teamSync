@@ -19,6 +19,10 @@ import {
   FormLabel,
   Input,
   Button,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import {
   FaTemperatureHigh,
@@ -36,7 +40,7 @@ function WeatherBox(props) {
 
   const { onOpen, onClose, isOpen } = useDisclosure();
   const firstFieldRef = React.useRef(null);
-
+  const initialFocusRef = React.useRef();
   return (
     <Flex
       direction={"row"}
@@ -48,116 +52,161 @@ function WeatherBox(props) {
       justifyContent="center"
       alignItems="center"
       my={"1rem"}>
-      <Flex direction="column">
-        <Flex
+      <Flex direction="column" width="100%">
+        {/* <Flex
           direction={"row"}
-          justifyContent="space-around"
           alignItems="center"
-          width="full">
-          <VStack>
-            <Popover
-              isOpen={isOpen}
-              // initialFocusRef={firstFieldRef}
-              onOpen={onOpen}
-              onClose={onClose}
-              placement="right"
-              closeonChange={false}
-              m={0}>
-              <PopoverTrigger>
-                <EditIcon cursor="pointer" w={8} h={5} />
-              </PopoverTrigger>
-              <PopoverContent p={5}>
-                <FocusLock returnFocus persistentFocus={false}>
+          justifyContent={"flex-end"}
+          width="full"> */}
+        <VStack position="absolute">
+          <Popover
+            isOpen={isOpen}
+            // initialFocusRef={firstFieldRef}
+            onOpen={onOpen}
+            onClose={onClose}
+            placement="right"
+            closeonChange={false}
+            m={0}>
+            <PopoverTrigger>
+              <EditIcon cursor="pointer" w={8} h={5} />
+            </PopoverTrigger>
+            <PopoverContent p={5}>
+              <FocusLock returnFocus persistentFocus={false}>
+                <PopoverArrow />
+                <PopoverCloseButton />
+
+                <form onCancel={onClose}>
+                  <VStack>
+                    <HStack>
+                      <FormControl>
+                        <FormLabel htmlFor="first-name">First Name</FormLabel>
+                        <Input
+                          id="first-name"
+                          type="name"
+                          defaultValue={props.firstName}
+                          onChange={(e) => setTeamFirstName(e.target.value)}
+                          required></Input>
+                      </FormControl>
+                      <FormControl>
+                        <FormLabel htmlFor="last-name">Last Name</FormLabel>
+                        <Input
+                          id="last-name"
+                          type="name"
+                          defaultValue={props.lastName}
+                          onChange={(e) =>
+                            setTeamLastName(e.target.value)
+                          }></Input>
+                      </FormControl>
+                    </HStack>
+                    <FormControl>
+                      <FormLabel htmlFor="role">Role</FormLabel>
+                      <Input
+                        id="role"
+                        type="role"
+                        defaultValue={props.role}
+                        onChange={(e) => {
+                          setRole(e.target.value);
+                        }}></Input>
+                    </FormControl>
+                    <FormControl>
+                      <FormLabel htmlFor="location" required>
+                        Location
+                      </FormLabel>
+                      <Input
+                        id="location"
+                        type="location"
+                        defaultValue={props.location}
+                        onChange={(e) => {
+                          setLocation(e.target.value);
+                        }}></Input>
+                    </FormControl>
+
+                    <Button
+                      colorScheme="blue"
+                      onClick={() => {
+                        props.onSubmit(
+                          props.employeeId,
+                          teamFirstName,
+                          teamLastName,
+                          role,
+                          location
+                        );
+                        onClose();
+                      }}>
+                      Save
+                    </Button>
+                  </VStack>
+                </form>
+              </FocusLock>
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            {({ isOpen, onClose }) => (
+              <>
+                <PopoverTrigger>
+                  <Icon as={FaTrash} cursor="pointer" />
+                </PopoverTrigger>
+                <PopoverContent>
                   <PopoverArrow />
                   <PopoverCloseButton />
-
-                  <form onCancel={onClose}>
-                    <VStack>
-                      <HStack>
-                        <FormControl>
-                          <FormLabel htmlFor="first-name">First Name</FormLabel>
-                          <Input
-                            id="first-name"
-                            type="name"
-                            defaultValue={props.firstName}
-                            onChange={(e) => setTeamFirstName(e.target.value)}
-                            required></Input>
-                        </FormControl>
-                        <FormControl>
-                          <FormLabel htmlFor="last-name">Last Name</FormLabel>
-                          <Input
-                            id="last-name"
-                            type="name"
-                            defaultValue={props.lastName}
-                            onChange={(e) =>
-                              setTeamLastName(e.target.value)
-                            }></Input>
-                        </FormControl>
-                      </HStack>
-                      <FormControl>
-                        <FormLabel htmlFor="role">Role</FormLabel>
-                        <Input
-                          id="role"
-                          type="role"
-                          defaultValue={props.role}
-                          onChange={(e) => {
-                            setRole(e.target.value);
-                          }}></Input>
-                      </FormControl>
-                      <FormControl>
-                        <FormLabel htmlFor="location" required>
-                          Location
-                        </FormLabel>
-                        <Input
-                          id="location"
-                          type="location"
-                          defaultValue={props.location}
-                          onChange={(e) => {
-                            setLocation(e.target.value);
-                          }}></Input>
-                      </FormControl>
-
+                  <PopoverHeader>Confirmation!</PopoverHeader>
+                  <PopoverBody>
+                    Are you sure you would like to delete?
+                  </PopoverBody>
+                  <PopoverFooter
+                    border="0"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    pb={4}>
+                    <ButtonGroup size="sm">
                       <Button
-                        colorScheme="blue"
+                        colorScheme="green"
                         onClick={() => {
-                          props.onSubmit(
-                            props.employeeId,
-                            teamFirstName,
-                            teamLastName,
-                            role,
-                            location
-                          );
+                          console.log("closing...");
                           onClose();
                         }}>
-                        Save
+                        Cancel
                       </Button>
-                    </VStack>
-                  </form>
-                </FocusLock>
-              </PopoverContent>
-            </Popover>
-            <Icon
-              as={FaTrash}
-              cursor="pointer"
-              onClick={() => {
-                props.onDelete(props.employeeId);
-              }}
-            />
-          </VStack>
-          {/* end of edit/delete module, start of employee info */}
+                      <Button
+                        colorScheme="blue"
+                        ref={initialFocusRef}
+                        onClick={() => {
+                          props.onDelete(props.employeeId);
+                        }}>
+                        Delete
+                      </Button>
+                    </ButtonGroup>
+                  </PopoverFooter>
+                </PopoverContent>
+              </>
+            )}
+          </Popover>
+        </VStack>
+        {/* end of edit/delete module, start of employee info */}
 
-          <VStack>
-            <Text lineHeight={".5rem"}>{props.name}</Text>
-            <Text lineHeight={".5rem"}>{props.role}</Text>
-          </VStack>
-
-          <VStack>
-            <Text lineHeight={".5rem"}>{props.time}</Text>
-            <Text lineHeight={".5rem"} textTransform="uppercase">
-              {props.city}, {props.state}
-            </Text>
-          </VStack>
-        </Flex>
+        <HStack display="absolute">
+          <Flex justifyContent={"center"}>
+            <VStack margin="0 auto" position="absolute">
+              <Text lineHeight={"1rem"} fontSize="xl" fontWeight="500">
+                {props.name}
+              </Text>
+              <Text lineHeight={".5rem"} fontSize="sm">
+                {props.role}
+              </Text>
+            </VStack>
+          </Flex>
+          <Flex justifyContent={"flex-end"}>
+            <VStack>
+              <Text lineHeight={"1rem"} fontSize="sm">
+                {props.city}
+              </Text>
+              <Text lineHeight={".5rem"} fontSize="sm">
+                {props.time}
+              </Text>
+            </VStack>
+          </Flex>
+        </HStack>
 
         {/* start of weather */}
 
@@ -165,19 +214,28 @@ function WeatherBox(props) {
           direction={"row"}
           justifyContent="space-around"
           alignItems="center"
-          mt={".25rem"}>
-          <Icon as={FaTemperatureHigh} w={"1rem"} m={0} lineHeight={".5rem"} />
-          <Text
-            fontSize={"sm"}
-            lineHeight={"1rem"}
-            marginInlineStart="0"
-            align="center">
-            {props.temp}°F
-          </Text>
-          <Image src={props.icon} w={"1rem"} m={0} />
-          <Text fontSize={"sm"} lineHeight={"1rem"} m={0} align="center">
-            {props.condition}
-          </Text>
+          mt={"1.5rem"}>
+          <HStack>
+            <Icon
+              as={FaTemperatureHigh}
+              w={"1rem"}
+              m={0}
+              lineHeight={".5rem"}
+            />
+            <Text
+              fontSize={"sm"}
+              lineHeight={"1rem"}
+              marginInlineStart="0"
+              align="center">
+              {props.temp}°F
+            </Text>
+          </HStack>
+          <HStack>
+            <Image src={props.icon} w={"1rem"} m={0} />
+            <Text fontSize={"sm"} lineHeight={"1rem"} m={0} align="center">
+              {props.condition}
+            </Text>
+          </HStack>
           {props.alert && (
             <HStack>
               <Icon as={FaExclamationTriangle} w={"1rem"} m={0} />

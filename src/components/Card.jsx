@@ -22,21 +22,12 @@ function Card(props) {
         "x-api-key": API_KEY,
       },
     };
-    // setNewsArray(JSON.parse(localStorage.getItem("newsArray"))) ||
+
     setTimeout(() => {
       fetch(
-        `https://api.newscatcherapi.com/v2/search?q=${props.location?.replace(
-          /\s/g,
-          ""
-        )}&lang=en&ranked_only=true&sort_by=rank&search_in=title`,
+        `https://api.newscatcherapi.com/v2/search?q=${props.location}&lang=en&ranked_only=true&sort_by=rank&search_in=title`,
         options
       )
-        // fetch(
-        //   `https://untitled-2a2be96kz7xk.runkit.sh/${props.location?.replace(
-        //     /\s/g,
-        //     ""
-        //   )}`
-        // )
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
